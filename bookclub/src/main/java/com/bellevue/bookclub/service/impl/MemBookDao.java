@@ -2,6 +2,7 @@ package com.bellevue.bookclub.service.impl;
 
 import com.bellevue.bookclub.model.Book;
 import com.bellevue.bookclub.service.dao.BookDao;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,27 @@ public class MemBookDao implements BookDao {
             }
         }
         return null;
+    }
+
+    @Override
+    public Book save(Book entity) {
+        books.add(entity);
+        return entity;
+    }
+
+    @Override
+    public Book findById(String id) {
+        return books.stream().filter(book -> book.getIsbn().equals(id)).findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return books;
+    }
+
+    @Override
+    public void delete(String id) {
+        books.removeIf(book -> book.getIsbn().equals(id));
     }
 }
 

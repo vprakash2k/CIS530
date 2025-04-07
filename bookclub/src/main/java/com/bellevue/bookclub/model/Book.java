@@ -10,7 +10,8 @@ public class Book {
     private List<String> authors;
 
     // Default constructor
-    public Book() {}
+    public Book() {
+    }
 
     // Parameterized constructor
     public Book(String isbn, String title, String description, int numOfPages, List<String> authors) {
@@ -22,20 +23,45 @@ public class Book {
     }
 
     // Getters and setters
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getTitle() {
+        return title;
+    }
 
-    public int getNumOfPages() { return numOfPages; }
-    public void setNumOfPages(int numOfPages) { this.numOfPages = numOfPages; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public List<String> getAuthors() { return authors; }
-    public void setAuthors(List<String> authors) { this.authors = authors; }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getNumOfPages() {
+        return numOfPages;
+    }
+
+    public void setNumOfPages(int numOfPages) {
+        this.numOfPages = numOfPages;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
+    }
 
     // toString method
     @Override
