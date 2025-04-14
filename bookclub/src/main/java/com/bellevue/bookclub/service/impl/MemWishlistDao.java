@@ -1,3 +1,4 @@
+/*
 package com.bellevue.bookclub.service.impl;
 
 import com.bellevue.bookclub.model.WishlistItem;
@@ -27,6 +28,12 @@ public class MemWishlistDao implements WishlistDao {
     }
 
     @Override
+    public void add(WishlistItem entity) {
+
+    }
+
+
+    @Override
     public WishlistItem save(WishlistItem entity) {
         wishlist.add(entity);
         return entity;
@@ -46,4 +53,6 @@ public class MemWishlistDao implements WishlistDao {
     public void delete(String id) {
         wishlist.removeIf(item -> item.getIsbn().equals(id));
     }
+
 }
+*/
