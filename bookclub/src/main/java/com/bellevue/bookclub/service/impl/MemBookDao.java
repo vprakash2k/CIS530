@@ -33,6 +33,7 @@ public class MemBookDao implements BookDao {
         return null;
     }
 
+    /*
     @Override
     public Book save(Book entity) {
         books.add(entity);
@@ -53,5 +54,7 @@ public class MemBookDao implements BookDao {
     public void delete(String id) {
         books.removeIf(book -> book.getIsbn().equals(id));
     }
+
+     */
 }
 

@@ -4,5 +4,10 @@ import com.bellevue.bookclub.model.WishlistItem;
 import com.bellevue.bookclub.service.GenericDao;
 
 public interface WishlistDao extends GenericDao<WishlistItem, String> {
-    WishlistItem find(String isbn);
+
+    void add(WishlistItem entity);
+
+    void update(WishlistItem entity);
+
+    boolean remove(WishlistItem entity);
 }

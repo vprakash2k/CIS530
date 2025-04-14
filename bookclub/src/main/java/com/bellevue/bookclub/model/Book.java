@@ -9,11 +9,8 @@ public class Book {
     private int numOfPages;
     private List<String> authors;
 
-    // Default constructor
-    public Book() {
-    }
+    public Book() {}
 
-    // Parameterized constructor
     public Book(String isbn, String title, String description, int numOfPages, List<String> authors) {
         this.isbn = isbn;
         this.title = title;

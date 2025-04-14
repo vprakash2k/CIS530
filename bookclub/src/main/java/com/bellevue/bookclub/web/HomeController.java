@@ -15,27 +15,30 @@ public class HomeController {
 
     @GetMapping("/")
     public String showHome(Model model) {
-        MemBookDao booksDao = new MemBookDao();
-        List<Book> books = booksDao.list();
+        MemBookDao bookDao = new MemBookDao();
+        List<Book> books = bookDao.list();
         model.addAttribute("books", books);
-        return "index"; // name of the home template (index.html)
+        return "index";
     }
 
     @RequestMapping("/about")
     public String showAboutUs() {
-        return "about"; // name of the about template (about.html)
+        return "about";
     }
 
     @RequestMapping("/contact")
     public String showContactUs() {
-        return "contact"; // name of the contact template (contact.html)
+        return "contact";
     }
 
     @GetMapping("/{id}")
     public String getMonthlyBook(@PathVariable("id") String id, Model model) {
-        MemBookDao booksDao = new MemBookDao();
-        Book book = booksDao.find(id);
+        MemBookDao bookDao = new MemBookDao();
+        Book book = bookDao.find(id);
+        if (book == null) {
+            return "redirect:/";
+        }
         model.addAttribute("book", book);
-        return "monthly-books/view"; // view for the selected book
+        return "monthly-books/view";
     }
 }
