@@ -41,7 +41,8 @@ public class WishlistController {
         if (bindingResult.hasErrors()) {
             return "wishlist/new";
         } else {
-            wishlistDao.list().add(wishlistItem);
+            //wishlistDao.list().add(wishlistItem);
+            wishlistDao.add(wishlistItem);
             return "redirect:/wishlist";
         }
     }
