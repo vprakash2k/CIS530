@@ -30,6 +30,11 @@ public class WishlistController {
         return "wishlist/list";
     }
 
+    /*@RequestMapping(method = RequestMethod.GET)
+    public String showWishlist() {
+        return "wishlist/list";
+    }*/
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String wishlistForm(Model model) {
         model.addAttribute("wishlistItem", new WishlistItem());
