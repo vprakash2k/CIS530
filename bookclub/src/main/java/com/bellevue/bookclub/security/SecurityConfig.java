@@ -37,8 +37,9 @@ public class SecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**") // Allow Swagger UI and OpenAPI docs
-                        .permitAll()
+                        .requestMatchers("/favicon.ico", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/books").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
