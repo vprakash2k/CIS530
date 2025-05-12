@@ -4,6 +4,8 @@ import com.bellevue.bookclub.model.WishlistItem;
 import com.bellevue.bookclub.service.dao.WishlistDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,19 +23,29 @@ public class MongoWishlistDao implements WishlistDao {
     }
 
     @Override
-    public void update(WishlistItem entity) {
-        mongoTemplate.save(entity);
+    public void update(WishlistItem wishlistItem) {
+        if (wishlistItem.getId() != null) {
+            System.out.println("entity.getId()--"+wishlistItem.getId());
+            mongoTemplate.save(wishlistItem);
+        } else {
+            throw new IllegalArgumentException("Cannot update wishlist item without an id.");
+        }
     }
 
     @Override
-    public boolean remove(WishlistItem entity) {
-        mongoTemplate.remove(entity);
-        return true;
+    public boolean remove(String key) {
+        WishlistItem item = mongoTemplate.findById(key, WishlistItem.class);
+        if (item != null) {
+            mongoTemplate.remove(item);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public List<WishlistItem> list() {
-        return mongoTemplate.findAll(WishlistItem.class);
+    public List<WishlistItem> list(String username) {
+	Query query = new Query(Criteria.where("username").is(username));
+        return mongoTemplate.find(query, WishlistItem.class);
     }
 
     @Override

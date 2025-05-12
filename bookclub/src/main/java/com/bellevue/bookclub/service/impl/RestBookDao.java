@@ -39,6 +39,26 @@ public class RestBookDao implements BookDao {
         return new Book(isbn, title, desc, infoUrl, numOfPages);
     }
 
+    @Override
+    public Book save(Book entity) {
+        return null;
+    }
+
+    @Override
+    public Book findById(String id) {
+        return null;
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public void delete(String id) {
+
+    }
+
 
     public Object getBooksDoc(String isbnString) {
         try {
@@ -77,7 +97,7 @@ public class RestBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> list() {
+    public List<Book> list(String username) {
         String isbnString = "9780593099322,9780261102361,9780261102378,9780590302715,9780316769532";
         System.out.println("list isbn::" + isbnString);
         Object doc = getBooksDoc(isbnString);

@@ -2,12 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wishlist</title>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<!-- Header / Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/" th:href="@{/}">Book Club</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <!-- User-specific links -->
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <span class="nav-link">Logged in as <strong sec:authentication="name"></strong></span>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
 <div class="container my-4">
     <h2 class="text-center">My Wishlist</h2>
     <div class="text-center mb-3">
@@ -18,9 +45,6 @@
     <div id="wishlist"> wishlist table</div>
 </div>
 
-<!-- Include Bootstrap JS (for Bootstrap functionality) 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0QhHgMhs3j8kj5im9xPjDdbV/rfSB6xxA9NOH0Yz6H3gmjD8" crossorigin="anonymous"></script>
--->
 <script>
     class HttpClient {
         async get(url, params = "") {
@@ -40,38 +64,31 @@
                 <tr>
                     <th scope="col">ISBN</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Functions</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>`;
         for (let item of items) {
-            tableString += `<tr>
-                <td>${item.isbn}</td>
-                <td>${item.title}</td>
-                <td>
-                    <a href="#" class="btn btn-warning btn-sm">EDIT</a>
-                    <a href="#" class="btn btn-danger btn-sm">DELETE</a>
+            tableString += `<tr><td>${item.isbn}</td><td>${item.title}</td><td>
+                    <a href="/wishlist/${item.id}/edit" class="btn btn-warning btn-sm">EDIT</a>
+                    <a href="/wishlist/${item.id}/remove" class="btn btn-danger btn-sm">DELETE</a>
                 </td>
             </tr>`;
         }
-
         tableString += `</tbody></table>`;
         return tableString;
     }
 
-window.onload = function() {
-    const http = new HttpClient();
-    http.get('http://localhost:8081/api/wishlist').then(res => {
-        console.log(res);
-        document.getElementById("wishlist").innerHTML = buildTable(res);
-    }).catch(e => {
-        console.error(e);
-    });
-	}
+    window.onload = function () {
+        const http = new HttpClient();
+        http.get('http://localhost:8081/api/wishlist').then(res => {
+            console.log(res);
+            document.getElementById("wishlist").innerHTML = buildTable(res);
+        }).catch(e => {
+            console.error(e);
+        });
+    }
 </script>
 
-<!-- Include Bootstrap JS (for Bootstrap functionality)
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0QhHgMhs3j8kj5im9xPjDdbV/rfSB6xxA9NOH0Yz6H3gmjD8" crossorigin="anonymous"></script>
--->
 </body>
 </html>

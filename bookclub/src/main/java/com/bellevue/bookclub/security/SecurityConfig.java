@@ -40,6 +40,7 @@ public class SecurityConfig  {
                         .requestMatchers("/favicon.ico", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers("/books").authenticated()
+						.requestMatchers("/wishlist/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

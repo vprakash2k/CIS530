@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.core.Authentication;
+
 
 import java.util.List;
 
@@ -22,9 +24,10 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String listBooks(Model model) {
+    public String listBooks(Model model, Authentication authentication) {
         System.out.println("inside listBooks");
-        List<Book> books = restBookDao.list();
+        String username = authentication.getName();
+        List<Book> books = restBookDao.list(username);
         System.out.println("books::" + books.toString());
         model.addAttribute("books", books);
         return "index";

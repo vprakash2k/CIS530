@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +28,9 @@ public class WishlistRestController {
     @Operation(summary = "View all wishlist items", description = "Returns a list of all wishlist items")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved the wishlist items")
     @RequestMapping(method = RequestMethod.GET)
-    public List<WishlistItem> showWishlist() {
-        return wishlistDao.list();
+    public List<WishlistItem> showWishlist(Authentication authentication) {
+        String username = authentication.getName();
+        return wishlistDao.list(username);
     }
 
     @Operation(summary = "Get wishlist item by ID", description = "Fetches a specific wishlist item based on the provided ID.")
