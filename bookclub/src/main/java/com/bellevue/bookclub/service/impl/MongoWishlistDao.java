@@ -23,10 +23,10 @@ public class MongoWishlistDao implements WishlistDao {
     }
 
     @Override
-    public void update(WishlistItem wishlistItem) {
-        if (wishlistItem.getId() != null) {
-            System.out.println("entity.getId()--"+wishlistItem.getId());
-            mongoTemplate.save(wishlistItem);
+    public void update(WishlistItem entity) {
+        if (entity.getId() != null) {
+            System.out.println("entity.getId()--"+entity.getId());
+            mongoTemplate.save(entity);
         } else {
             throw new IllegalArgumentException("Cannot update wishlist item without an id.");
         }
@@ -34,11 +34,8 @@ public class MongoWishlistDao implements WishlistDao {
 
     @Override
     public boolean remove(String key) {
-        WishlistItem item = mongoTemplate.findById(key, WishlistItem.class);
-        if (item != null) {
-            mongoTemplate.remove(item);
-            return true;
-        }
+        Query query = new Query(Criteria.where("id").is(key));
+        mongoTemplate.remove(query, WishlistItem.class);
         return false;
     }
 

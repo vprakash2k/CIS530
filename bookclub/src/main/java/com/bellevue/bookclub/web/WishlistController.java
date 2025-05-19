@@ -18,13 +18,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/wishlist")
-@Tag(name = "Wishlist", description = "Operations related to the wishlist")
 public class WishlistController {
 
     private WishlistDao wishlistDao;
 
     @Autowired
-    private void setWishlistDao(WishlistDao wishlistDao) {
+    public void setWishlistDao(WishlistDao wishlistDao) {
         this.wishlistDao = wishlistDao;
     }
 
@@ -62,19 +61,19 @@ public class WishlistController {
     }
 
     @Operation(summary = "Edit wishlist item", description = "Displays the form to edit a wishlist item.")
-    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}/edit", method = RequestMethod.GET)
     public String editWishlistItem(@PathVariable String id, Model model) {
+        System.out.println("id--"+id);
         WishlistItem wishlistItem = wishlistDao.find(id);
-        if (wishlistItem == null) {
-            return "error/404";
-        }
+        System.out.println("wishlistItem--"+wishlistItem.getId());
+        System.out.println("wishlistItem--"+wishlistItem.getUsername());
         model.addAttribute("wishlistItem", wishlistItem);
         return "wishlist/edit";
     }
 
     @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Update wishlist item", description = "Processes the form submission to update a wishlist item.")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
     public String updateWishlistItem(@Valid @ModelAttribute WishlistItem wishlistItem, BindingResult bindingResult, Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return "wishlist/edit";
@@ -92,7 +91,7 @@ public class WishlistController {
     }
 
     @Operation(summary = "Remove a wishlist item", description = "Deletes a wishlist item from the user's list.")
-    @RequestMapping(value = "/{id}/remove", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}/remove", method = RequestMethod.GET)
     public String removeWishlistItem(@PathVariable String id) {
         wishlistDao.remove(id);
         return "redirect:/wishlist";

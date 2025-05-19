@@ -30,7 +30,9 @@ public class WishlistRestController {
     @RequestMapping(method = RequestMethod.GET)
     public List<WishlistItem> showWishlist(Authentication authentication) {
         String username = authentication.getName();
-        return wishlistDao.list(username);
+        List<WishlistItem> wishlistItems = wishlistDao.list(username);
+    System.out.println("Wishlist Items: " + wishlistItems); 
+	return wishlistItems;
     }
 
     @Operation(summary = "Get wishlist item by ID", description = "Fetches a specific wishlist item based on the provided ID.")
