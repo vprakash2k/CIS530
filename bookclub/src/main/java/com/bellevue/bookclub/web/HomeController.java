@@ -1,6 +1,9 @@
 package com.bellevue.bookclub.web;
 
 import com.bellevue.bookclub.model.Book;
+import com.bellevue.bookclub.model.BookOfTheMonth;
+import com.bellevue.bookclub.service.dao.BookDao;
+import com.bellevue.bookclub.service.dao.BookOfTheMonthDao;
 import com.bellevue.bookclub.service.impl.RestBookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.core.Authentication;
 
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -23,12 +28,18 @@ public class HomeController {
         this.restBookDao = restBookDao;
     }
 
-    @GetMapping("/")
+    @Autowired
+    private BookOfTheMonthDao bookOfTheMonthDao;
+
+    @Autowired
+    private BookDao bookDao;
+
+    @GetMapping("/books")
     public String listBooks(Model model, Authentication authentication) {
         System.out.println("inside listBooks");
         String username = authentication.getName();
         List<Book> books = restBookDao.list(username);
-        System.out.println("books::" + books.toString());
+        System.out.println("listBooks::" + books.toString());
         model.addAttribute("books", books);
         return "index";
     }
@@ -68,5 +79,29 @@ public class HomeController {
     @RequestMapping("/contact")
     public String showContactUs() {
         return "contact";
+    }
+
+    @GetMapping("/")
+    public String showHome(Model model) {
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        System.out.println("showHome month::" + month);
+
+        List<BookOfTheMonth> monthlyBooks = bookOfTheMonthDao.list(String.valueOf(month));
+        System.out.println("showHome monthlyBooks::" + monthlyBooks.toString());
+
+        StringBuilder isbnBuilder = new StringBuilder("ISBN:");
+        for (BookOfTheMonth book : monthlyBooks) {
+            isbnBuilder.append(book.getIsbn()).append(",");
+        }
+
+        String isbnString = isbnBuilder.toString();
+        if (isbnString.length() > 5) {
+            isbnString = isbnString.substring(5, isbnString.length() - 1);
+        }
+
+        model.addAttribute("monthlyBooks", monthlyBooks);
+        model.addAttribute("books", bookDao.list(isbnString));
+        return "index";
     }
 }

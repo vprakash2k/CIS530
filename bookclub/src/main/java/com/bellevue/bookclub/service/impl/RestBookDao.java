@@ -75,7 +75,7 @@ public class RestBookDao implements BookDao {
                 .queryParam("bibkeys", isbnString)
                 .queryParam("format", "json")
                 .queryParam("jscmd", "details");
-
+System.out.println("builder.toUriString()--"+builder.toUriString());
         HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = rest.exchange(
                 builder.toUriString(),
@@ -97,10 +97,10 @@ public class RestBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> list(String username) {
-        String isbnString = "9780593099322,9780261102361,9780261102378,9780590302715,9780316769532";
-        System.out.println("list isbn::" + isbnString);
-        Object doc = getBooksDoc(isbnString);
+    public List<Book> list(String key) {
+        //String isbnString = "9780593099322,9780261102361,9780261102378,9780590302715,9780316769532";
+        System.out.println("key::" + key);
+        Object doc = getBooksDoc(key);
 
         List<String> titles = JsonPath.read(doc, "$..title");
         List<String> isbns = JsonPath.read(doc, "$..bib_key");

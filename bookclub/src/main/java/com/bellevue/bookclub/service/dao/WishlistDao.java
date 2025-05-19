@@ -2,7 +2,6 @@ package com.bellevue.bookclub.service.dao;
 
 import com.bellevue.bookclub.model.WishlistItem;
 import com.bellevue.bookclub.service.GenericCrudDao;
-import com.bellevue.bookclub.service.GenericDao;
 
 import java.util.List;
 
