@@ -61,15 +61,6 @@ public class HomeController {
         return "monthly-books/view";
     }
 
-    /*@GetMapping("/books/{id}")
-    public String getMonthlyBook(@PathVariable("id") String id, Model model) {
-        Book book = restBookDao.find(id);
-        if (book == null) {
-            return "redirect:/";
-        }
-        model.addAttribute("book", book);
-        return "monthly-books/view";
-    }*/
 
     @RequestMapping("/about")
     public String showAboutUs() {

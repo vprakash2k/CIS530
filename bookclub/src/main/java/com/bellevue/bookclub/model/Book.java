@@ -1,7 +1,5 @@
 package com.bellevue.bookclub.model;
 
-import java.util.List;
-
 public class Book {
     private String isbn;
     private String title;
@@ -9,8 +7,11 @@ public class Book {
     private String infoUrl;
     private int numOfPages;
 
+    
+    public Book() {
+    }
 
-    // Constructor
+    
     public Book(String isbn, String title, String description, String infoUrl, int numOfPages) {
         this.isbn = isbn;
         this.title = title;
@@ -60,7 +61,6 @@ public class Book {
         this.numOfPages = numOfPages;
     }
 
-    
     @Override
     public String toString() {
         return "Book{" +

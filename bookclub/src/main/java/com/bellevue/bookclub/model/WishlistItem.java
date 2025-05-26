@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "wishlistItem")
 public class WishlistItem {
     @Id
+    @Setter
     private String id;
 
     @Setter
