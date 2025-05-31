@@ -81,7 +81,7 @@
 
     window.onload = function () {
         const http = new HttpClient();
-        http.get('http://localhost:8081/api/wishlist').then(res => {
+        http.get('https://viduthalairaju-bookclub.herokuapp.com/api/wishlist').then(res => {
             console.log(res);
             document.getElementById("wishlist").innerHTML = buildTable(res);
         }).catch(e => {
