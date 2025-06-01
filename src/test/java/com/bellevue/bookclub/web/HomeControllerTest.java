@@ -12,11 +12,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -46,7 +47,6 @@ public class HomeControllerTest {
         }
     }
 
-
     @Autowired
     private RestBookDao restBookDao;
 
@@ -57,32 +57,27 @@ public class HomeControllerTest {
     private BookDao bookDao;
 
     @Test
-    public void testListBooks() throws Exception {
-        Book book = new Book();
-        book.setIsbn("1234567890");
-        book.setTitle("Test Book");
-        List<Book> books = List.of(book);
+    @WithMockUser(username = "user", roles = "USER")
+    void listBooks_shouldReturnIndexWithBooks() throws Exception {
+        when(restBookDao.list("user")).thenReturn(List.of(new Book()));
 
-        Authentication auth = Mockito.mock(Authentication.class);
-        when(auth.getName()).thenReturn("user");
-        when(restBookDao.list("user")).thenReturn(books);
-
-        mockMvc.perform(get("/books").principal(auth))
+        mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
                 .andExpect(model().attributeExists("books"));
     }
 
     @Test
+    @WithMockUser(username = "user", roles = "USER")  // Added this annotation
     public void testShowHome() throws Exception {
         BookOfTheMonth botm = new BookOfTheMonth();
         botm.setIsbn("123");
-        when(bookOfTheMonthDao.list(Mockito.anyString())).thenReturn(List.of(botm));
+        when(bookOfTheMonthDao.list(anyString())).thenReturn(List.of(botm));
 
         Book book = new Book();
         book.setIsbn("123");
         book.setTitle("Monthly Book");
-        when(bookDao.list(Mockito.anyString())).thenReturn(List.of(book));
+        when(bookDao.list(anyString())).thenReturn(List.of(book));
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
@@ -91,26 +86,32 @@ public class HomeControllerTest {
                 .andExpect(model().attributeExists("books"));
     }
 
-  
+    @Test
+    @WithMockUser(username = "user", roles = "USER") 
+    public void testShowAboutUs() throws Exception {
+        mockMvc.perform(get("/about"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("about"));
+    }
 
     @Test
-    public void testGetBookFound() throws Exception {
+    @WithMockUser(username = "user", roles = "USER") 
+    void getBook_shouldReturnBookView_whenBookExists() throws Exception {
         Book book = new Book();
-        book.setIsbn("1234567890");
-        book.setTitle("Found Book");
-        when(restBookDao.find("1234567890")).thenReturn(book);
+        when(restBookDao.find("123456")).thenReturn(book);
 
-        mockMvc.perform(get("/1234567890"))
+        mockMvc.perform(get("/123456"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("monthly-books/view"))
                 .andExpect(model().attributeExists("book"));
     }
 
     @Test
-    public void testGetBookNotFound() throws Exception {
-        when(restBookDao.find("notfound")).thenReturn(null);
+    @WithMockUser(username = "user", roles = "USER") 
+    void getBook_shouldRedirectToHome_whenBookNotFound() throws Exception {
+        when(restBookDao.find("999")).thenReturn(null);
 
-        mockMvc.perform(get("/notfound"))
+        mockMvc.perform(get("/999"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }

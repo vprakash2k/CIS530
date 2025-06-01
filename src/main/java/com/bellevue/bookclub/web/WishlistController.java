@@ -62,7 +62,6 @@ public class WishlistController {
     @Operation(summary = "Edit wishlist item", description = "Displays the form to edit a wishlist item.")
     @RequestMapping(path = "/{id}/edit", method = RequestMethod.GET)
     public String editWishlistItem(@PathVariable String id, Model model) {
-        System.out.println("id--"+id);
         WishlistItem wishlistItem = wishlistDao.find(id);
         System.out.println("wishlistItem--"+wishlistItem.getId());
         System.out.println("wishlistItem--"+wishlistItem.getUsername());
@@ -78,7 +77,6 @@ public class WishlistController {
             return "wishlist/edit";
         }
 
-        System.out.println("Updating Wishlist Item with ID: " + wishlistItem.getId());
 
         if (wishlistItem.getId() != null) {
             wishlistItem.setUsername(authentication.getName());

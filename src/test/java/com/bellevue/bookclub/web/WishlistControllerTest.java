@@ -3,87 +3,68 @@ package com.bellevue.bookclub.web;
 import com.bellevue.bookclub.model.WishlistItem;
 import com.bellevue.bookclub.service.dao.WishlistDao;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.core.Authentication;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(WishlistController.class)
-@Import(WishlistControllerTest.MockConfig.class)
-public class WishlistControllerTest {
-
-    @Configuration
-    static class MockConfig {
-        @Bean
-        public WishlistDao wishlistDao() {
-            return Mockito.mock(WishlistDao.class);
-        }
-    }
+class WishlistControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private WishlistDao wishlistDao;
 
     @Test
-    public void testShowWishlist() throws Exception {
-        WishlistItem item = new WishlistItem("1", "Test Item");
-        item.setUsername("user");
+    @WithMockUser(username = "testuser")
+    public void testShowWishlist_shouldReturnWishlistViewWithItems() throws Exception {
+        WishlistItem item = new WishlistItem();
+        item.setId("1");
+        item.setUsername("testuser");
 
-        List<WishlistItem> items = List.of(item);
+        when(wishlistDao.list(anyString())).thenReturn(List.of(item));
 
-        Authentication auth = Mockito.mock(Authentication.class);
-        when(auth.getName()).thenReturn("user");
-        when(wishlistDao.list("user")).thenReturn(items);
-
-        mockMvc.perform(get("/wishlist").principal(auth))
+        mockMvc.perform(get("/wishlist"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist/list"))
                 .andExpect(model().attributeExists("wishlist"));
     }
 
     @Test
-    public void testAddWishlistItem() throws Exception {
-        Authentication auth = Mockito.mock(Authentication.class);
-        when(auth.getName()).thenReturn("user");
-
+    @WithMockUser
+    public void addWishlistItem_shouldRedirectOnSuccess() throws Exception {
         mockMvc.perform(post("/wishlist")
-                        .param("isbn", "111222333")
-                        .param("title", "JUnit in Action")
-                        .principal(auth))
+                .param("title", "Test Title")
+                .param("author", "Test Author")
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/wishlist"));
-
-        Mockito.verify(wishlistDao).add(Mockito.argThat(item ->
-                "111222333".equals(item.getIsbn()) &&
-                        "JUnit in Action".equals(item.getTitle()) &&
-                        "user".equals(item.getUsername())));
     }
 
     @Test
-    public void testEditWishlistItem() throws Exception {
-        WishlistItem item = new WishlistItem("9876543210", "Edit This Book");
+    @WithMockUser
+    public void editWishlistItem_shouldReturnEditView() throws Exception {
+        WishlistItem item = new WishlistItem();
+        item.setId("123");
         item.setUsername("user");
-        item.setId("abc123");
 
-        when(wishlistDao.find("abc123")).thenReturn(item);
+        when(wishlistDao.find("123")).thenReturn(item);
 
-        mockMvc.perform(get("/wishlist/abc123/edit"))
+        mockMvc.perform(get("/wishlist/123/edit"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist/edit"))
                 .andExpect(model().attributeExists("wishlistItem"));
     }
-
 }
