@@ -36,14 +36,11 @@ dependencies {
     implementation 'com.jayway.jsonpath:json-path:2.9.0'
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'org.hibernate.validator:hibernate-validator:6.0.13.Final'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

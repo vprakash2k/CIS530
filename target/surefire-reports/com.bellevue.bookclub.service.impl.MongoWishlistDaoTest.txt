@@ -1,21 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.bellevue.bookclub.service.impl.MongoWishlistDaoTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.052 s <<< FAILURE! -- in com.bellevue.bookclub.service.impl.MongoWishlistDaoTest
-com.bellevue.bookclub.service.impl.MongoWishlistDaoTest.testUpdateWithId -- Time elapsed: 0.016 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: Unexpected exception thrown: java.lang.IllegalArgumentException: Cannot update wishlist item without an id.
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
-	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:53)
-	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:36)
-	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3199)
-	at com.bellevue.bookclub.service.impl.MongoWishlistDaoTest.testUpdateWithId(MongoWishlistDaoTest.java:62)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-Caused by: java.lang.IllegalArgumentException: Cannot update wishlist item without an id.
-	at com.bellevue.bookclub.service.impl.MongoWishlistDao.update(MongoWishlistDao.java:31)
-	at com.bellevue.bookclub.service.impl.MongoWishlistDaoTest.lambda$testUpdateWithId$0(MongoWishlistDaoTest.java:62)
-	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:49)
-	... 6 more
-
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 s -- in com.bellevue.bookclub.service.impl.MongoWishlistDaoTest

@@ -1,7 +1,6 @@
 com\bellevue\bookclub\BookclubApplicationTests.class
 com\bellevue\bookclub\service\impl\MongoWishlistDaoTest.class
 com\bellevue\bookclub\web\WishlistControllerTest.class
-com\bellevue\bookclub\web\WishlistControllerTest$MockConfig.class
+com\bellevue\bookclub\service\impl\MongoBookOfTheMonthDaoTest.class
 com\bellevue\bookclub\web\HomeControllerTest$TestConfig.class
 com\bellevue\bookclub\web\HomeControllerTest.class
-com\bellevue\bookclub\service\impl\MongoBookOfTheMonthDaoTest.class
