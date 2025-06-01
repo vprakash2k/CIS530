@@ -56,6 +56,7 @@ public class HomeControllerTest {
     @Autowired
     private BookDao bookDao;
 
+
     @Test
     @WithMockUser(username = "user", roles = "USER")
     void listBooks_shouldReturnIndexWithBooks() throws Exception {
@@ -87,7 +88,7 @@ public class HomeControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER") 
+    @WithMockUser(username = "user", roles = "USER")
     public void testShowAboutUs() throws Exception {
         mockMvc.perform(get("/about"))
                 .andExpect(status().isOk())
@@ -95,7 +96,7 @@ public class HomeControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER") 
+    @WithMockUser(username = "user", roles = "USER")
     void getBook_shouldReturnBookView_whenBookExists() throws Exception {
         Book book = new Book();
         when(restBookDao.find("123456")).thenReturn(book);
@@ -107,7 +108,7 @@ public class HomeControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER") 
+    @WithMockUser(username = "user", roles = "USER")
     void getBook_shouldRedirectToHome_whenBookNotFound() throws Exception {
         when(restBookDao.find("999")).thenReturn(null);
 
