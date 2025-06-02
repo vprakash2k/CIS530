@@ -46,9 +46,10 @@ class WishlistControllerTest {
     @WithMockUser
     public void addWishlistItem_shouldRedirectOnSuccess() throws Exception {
         mockMvc.perform(post("/wishlist")
-                .param("title", "Test Title")
-                .param("author", "Test Author")
-                .with(csrf()))
+                        .param("title", "Test Title")
+                        .param("author", "Test Author")
+                        .param("isbn", "1234567890")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/wishlist"));
     }
