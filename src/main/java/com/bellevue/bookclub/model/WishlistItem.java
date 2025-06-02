@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
+
 @Getter
 @Document(collection = "wishlistItem")
 public class WishlistItem {

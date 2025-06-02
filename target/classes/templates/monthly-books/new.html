@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Monthly Book Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container my-5 flex-grow-1">
+    <h2 class="mb-4">New Monthly Book Form</h2>
+
+    <form th:action="@{/monthly-books/new}" th:object="${bookOfTheMonth}" method="post">
+        <div class="form-group">
+            <label for="month">Months</label>
+            <select id="month" class="form-control" th:field="*{month}">
+                <option th:each="entry : ${months}"
+                        th:value="${entry.key}"
+                        th:text="${entry.value}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group mt-3">
+            <label for="isbn">ISBN</label>
+            <input type="text" class="form-control" id="isbn" th:field="*{isbn}" />
+            <small class="text-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></small>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+            <button type="submit" class="btn btn-success me-2">Create</button>
+        </div>
+
+        <!-- Left-aligned "Return to Monthly Books" link on the next line -->
+        <div class="mt-2 d-flex justify-content-start">
+            <a th:href="@{/monthly-books}" class="btn btn-secondary">Return to Monthly Books</a>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

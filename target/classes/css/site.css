@@ -1,0 +1,64 @@
+/* site.css */
+
+/* Body styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa; /* light gray background */
+    color: #343a40; /* dark text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+header {
+    background-color: #343a40; /* dark background */
+    color: #ffffff;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Card customization */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+    background-color: #ffffff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Card title */
+.card-title {
+    font-weight: 600;
+    color: #007bff; /* bootstrap primary blue */
+}
+
+/* Card text styling */
+.card-text {
+    color: #6c757d; /* bootstrap secondary text */
+}
+
+/* Buttons inside card */
+.btn-group .btn {
+    margin-right: 0.25rem;
+}
+
+/* Footer styling */
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .card-title {
+        font-size: 1.1rem;
+    }
+}
