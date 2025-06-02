@@ -22,6 +22,7 @@ public class WishlistItem {
     @NotEmpty(message = "ISBN is a required field.")
     private String isbn;
 
+
     @Setter
     @NotNull(message = "Title is a required field.")
     @NotEmpty(message = "Title is a required field.")
