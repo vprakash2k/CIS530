@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Monthly Books</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-<div class="container my-4">
+<body class="d-flex flex-column min-vh-100">
+
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+<div class="container my-4 flex-grow-1">
     <h1 class="text-center">Monthly Books</h1>
-    <div class="text-center mt-3">
+    <div class="text-center mt-3 mb-3">
         <a class="btn btn-primary" th:href="@{/monthly-books/new}">New Monthly Books</a>
     </div>
 
@@ -32,5 +37,8 @@
     </table>
 
 </div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>
